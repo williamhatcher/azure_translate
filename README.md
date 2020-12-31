@@ -1,2 +1,2 @@
 # azure_translate
-Vim Library for Azure Cognitive Services Translate
+Nim Library for Azure Cognitive Services Translate
