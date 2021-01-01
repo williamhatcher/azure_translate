@@ -25,4 +25,6 @@ jobs:
         nim-version: 'stable'
       
     - name: Run Tests
+      env: # Or as an environment variable
+        AZURE_SECRET_KEY: ${{ secrets.AZURE_SECRET_KEY }}
       run: nimble update && nimble test
