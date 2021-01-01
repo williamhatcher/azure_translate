@@ -1,0 +1,37 @@
+AzureTranslateError	azure_translate.html#AzureTranslateError	azure_translate: AzureTranslateError	
+DictExQuery	azure_translate.html#DictExQuery	azure_translate: DictExQuery	
+azTranslation	azure_translate.html#azTranslation	Scope.azTranslation	
+azTransliteration	azure_translate.html#azTransliteration	Scope.azTransliteration	
+azDictionary	azure_translate.html#azDictionary	Scope.azDictionary	
+Scope	azure_translate.html#Scope	azure_translate: Scope	
+TextType	azure_translate.html#TextType	azure_translate: TextType	
+ProfanityAction	azure_translate.html#ProfanityAction	azure_translate: ProfanityAction	
+ProfanityMarker	azure_translate.html#ProfanityMarker	azure_translate: ProfanityMarker	
+BaseLanguage	azure_translate.html#BaseLanguage	azure_translate: BaseLanguage	
+ScriptLanguage	azure_translate.html#ScriptLanguage	azure_translate: ScriptLanguage	
+TranslationLanguage	azure_translate.html#TranslationLanguage	azure_translate: TranslationLanguage	
+TransliterationLanguage	azure_translate.html#TransliterationLanguage	azure_translate: TransliterationLanguage	
+DictionaryTranslation	azure_translate.html#DictionaryTranslation	azure_translate: DictionaryTranslation	
+DictionaryLanguage	azure_translate.html#DictionaryLanguage	azure_translate: DictionaryLanguage	
+Alignment	azure_translate.html#Alignment	azure_translate: Alignment	
+SentenceBoundaries	azure_translate.html#SentenceBoundaries	azure_translate: SentenceBoundaries	
+SourceText	azure_translate.html#SourceText	azure_translate: SourceText	
+BaseTranslation	azure_translate.html#BaseTranslation	azure_translate: BaseTranslation	
+DetectedLanguage	azure_translate.html#DetectedLanguage	azure_translate: DetectedLanguage	
+BackTranslations	azure_translate.html#BackTranslations	azure_translate: BackTranslations	
+DictionaryLookupTranslations	azure_translate.html#DictionaryLookupTranslations	azure_translate: DictionaryLookupTranslations	
+BaseDictionaryExample	azure_translate.html#BaseDictionaryExample	azure_translate: BaseDictionaryExample	
+Languages	azure_translate.html#Languages	azure_translate: Languages	
+Translation	azure_translate.html#Translation	azure_translate: Translation	
+Transliteration	azure_translate.html#Transliteration	azure_translate: Transliteration	
+Detection	azure_translate.html#Detection	azure_translate: Detection	
+BreakSentence	azure_translate.html#BreakSentence	azure_translate: BreakSentence	
+DictionaryLookup	azure_translate.html#DictionaryLookup	azure_translate: DictionaryLookup	
+DictionaryExample	azure_translate.html#DictionaryExample	azure_translate: DictionaryExample	
+languages	azure_translate.html#languages,string,openArray[Scope],Option[string]	azure_translate: languages(key: string; scope: openArray[Scope] = [];\n          acceptLanguage: Option[string] = none(string)): Languages	
+translate	azure_translate.html#translate,string,TextQuery,openArray[string],Option[string],Option[TextType],Option[string],Option[ProfanityAction],Option[ProfanityMarker],Option[bool],Option[bool],Option[string],Option[string],Option[string],Option[bool]	azure_translate: translate(key: string; text: TextQuery; to: openArray[string];\n          from: Option[string] = none(string);\n          textType: Option[TextType] = none(TextType);\n          category: Option[string] = none(string);\n          profanityAction: Option[ProfanityAction] = none(ProfanityAction);\n          profanityMarker: Option[ProfanityMarker] = none(ProfanityMarker);\n          includeAlignment, includeSentenceLength: Option[bool] = none(bool);\n          suggestedFrom, fromScript, toScript: Option[string] = none(string);\n          allowFallback: Option[bool] = none(bool)): seq[Translation]	
+transliterate	azure_translate.html#transliterate,string,TextQuery,string,string,string	azure_translate: transliterate(key: string; text: TextQuery;\n              language, fromScript, toScript: string): seq[Transliteration]	
+detect	azure_translate.html#detect,string,TextQuery	azure_translate: detect(key: string; text: TextQuery): seq[Detection]	
+break_sentence	azure_translate.html#break_sentence,string,TextQuery,Option[string],Option[string]	azure_translate: break_sentence(key: string; text: TextQuery;\n               language, script: Option[string] = none(string)): seq[\n    BreakSentence]	
+dictionary_lookup	azure_translate.html#dictionary_lookup,string,TextQuery,string,string	azure_translate: dictionary_lookup(key: string; text: TextQuery; from, to: string): seq[\n    DictionaryLookup]	
+dictionary_examples	azure_translate.html#dictionary_examples,string,openArray[DictExQuery],string,string	azure_translate: dictionary_examples(key: string; query: openArray[DictExQuery]; from, to: string): seq[\n    DictionaryExample]	

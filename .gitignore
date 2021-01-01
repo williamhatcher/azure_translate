@@ -1,3 +1,15 @@
+# Ignore all
+*
+
+# Unignore all with extensions
+!*.*
+
+# Unignore all dirs
+!*/
+
 nimcache/
 nimblecache/
 htmldocs/
+
+# Ignore Environment Files
+**/.env

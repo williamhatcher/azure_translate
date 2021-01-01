@@ -1,29 +1,35 @@
 import httpclient, tables, json, options, strutils, uri
 import nuuid
 
-const api_base = parseUri("https://api.cognitive.microsofttranslator.com/")
-const api_version = @{"api-version": "3.0"}  # Azure Translate API Version
+const 
+    api_base = parseUri("https://api.cognitive.microsofttranslator.com/")
+    api_version = @{"api-version": "3.0"}  # Azure Translate API Version
 
 type
     AzureTranslateError* = object of CatchableError
+        ## Raised when the API returns an error. See `msg` as well
         code*: int
-    TextQuery* = openArray[string]
-    DictExQuery* = tuple[text, translation: string]
+    TextQuery = openArray[string]
+    DictExQuery* = tuple[text, translation: string]  ## Type alias for `dictionay_example` endpoint parameter
     Scope* = enum
+        ## Scope for `languages` endpoint
         azTranslation, azTransliteration, azDictionary
     TextType* {.pure.} = enum
+        ## for `translate` endpoint
         plain, html
     ProfanityAction* {.pure.} = enum
+        ## for `translate` endpoint
         noAction, marked, deleted
     ProfanityMarker* {.pure.} = enum
+        ## for `translate` endpoint
         asterisk, tag
 
     # Sub-objects
     BaseLanguage* = object of RootObj
         name*, nativeName*: string
 
-    ScriptLanguage* = object of BaseLanguage
-        code*, dir*: string
+    ScriptLanguage* = object
+        code*, name*, nativeName*, dir*: string
         toScripts*: Option[seq[ScriptLanguage]]
 
     TranslationLanguage* = object of BaseLanguage
@@ -71,14 +77,14 @@ type
     BaseDictionaryExample* = object
         sourcePrefix, sourceTerm, sourceSuffix, targetPrefix, targetTerm, targetSuffix: string
 
-    # API Return objects
+    # API Result objects
     Languages* = object
         translation*: Option[Table[string, TranslationLanguage]]
         transliteration*: Option[Table[string, TransliterationLanguage]]
         dictionary*: Option[Table[string, DictionaryLanguage]]
 
     Translation* = object 
-        detectedLanguage*: Option[DetectedLanguage]
+        detectedLanguage*: Option[DetectedLanguage]  ## Exists only when `from` is omited in `translate` endpoint
         translations*: seq[BaseTranslation]
 
     Transliteration* = object
@@ -93,17 +99,17 @@ type
         detectedLanguage*: Option[DetectedLanguage]
 
     DictionaryLookup* = object
-        normalizedSource, displaySource: string
-        translations: seq[DictionaryLookupTranslations]
+        normalizedSource*, displaySource*: string
+        translations*: seq[DictionaryLookupTranslations]
 
     DictionaryExample* = object
-        normalizedSource, normalizedTarget: string
-        examples: seq[BaseDictionaryExample]
+        normalizedSource*, normalizedTarget*: string
+        examples*: seq[BaseDictionaryExample]
 
 proc `$`(s: Scope): string =
-    result = system.`$`(s)[2 .. ^1].toLowerAscii
+    system.`$`(s)[2 .. ^1].toLowerAscii
 proc `$`(p: ProfanityAction | ProfanityMarker): string =
-    result = system.`$`(p).capitalizeAscii
+    system.`$`(p).capitalizeAscii
 
 proc toSeq[T](jnode: JsonNode): seq[T] =
   if jnode.kind == Jarray:
@@ -118,10 +124,10 @@ proc toJArray(text: openArray[string]): JsonNode =
 let client = newHttpClient()
 
 proc endpoint(`method`: string, query: seq[(string, string)]): string =
-    result = $(api_base / `method` ? api_version & query)
+    $(api_base / `method` ? api_version & query)
 
 proc endpoint(`method`: string): string = 
-    result = endpoint(`method`, newSeq[(string, string)]())
+    endpoint(`method`, newSeq[(string, string)]())
 
 proc newHeaders(key: string): HttpHeaders =
     # Generate a new set of headers for each request
@@ -131,7 +137,7 @@ proc newHeaders(key: string): HttpHeaders =
         "Content-type": @["application/json"],
         "X-ClientTraceId": @[$generateUUID()]
     }.newTable
-    
+
 proc request(uri, key, body: string): Response =
     result = client.request(uri, httpMethod = HttpPost, headers = newHeaders(key), body = body)
 
@@ -143,21 +149,20 @@ proc request(uri, key, body: string): Response =
             raise (ref AzureTranslateError)(msg: result.body)
 
 
-proc languages*(key: string, scope: Option[seq[Scope]] = none(seq[Scope]), acceptLanguage: Option[string] = none(string)): Languages =
+proc languages*(key: string, scope: openArray[Scope] = [], acceptLanguage: Option[string] = none(string)): Languages =
     ## Gets the set of languages currently supported by other operations of the Translator.
     var headers = newHeaders(key)
     if acceptLanguage.isSome:
         headers["Accept-Language"] = acceptLanguage.get
 
     var uri = endpoint("languages")
-    if scope.isSome and scope.get.len > 0:
-        uri &= "&scope=" & scope.get.join(",")
+    if scope.len > 0:
+        uri &= "&scope=" & scope.join(",")
     
     let resp = client.request(uri, httpMethod = HttpGet, headers = newHeaders(key))
+    var respJson = parseJson(resp.body)
 
-    let respJson = parseJson(resp.body)
     result = to(respJson, Languages)
-
 
 proc translate*(key: string, text: TextQuery, to: openArray[string], `from`: Option[string] = none(string), 
     textType: Option[TextType] = none(TextType), category: Option[string] = none(string), 
@@ -166,7 +171,7 @@ proc translate*(key: string, text: TextQuery, to: openArray[string], `from`: Opt
     suggestedFrom, fromScript, toScript: Option[string] = none(string),
     allowFallback: Option[bool] = none(bool)): seq[Translation] = 
     ## Translates text.
-    # Note that using category has not been tested
+    ## Note that using category has not been tested
 
     var query = newSeq[(string, string)]()
     for t in to:
@@ -194,27 +199,28 @@ proc translate*(key: string, text: TextQuery, to: openArray[string], `from`: Opt
     if allowFallback.isSome:
         query.add({"allowFallback": $allowFallback.get})
 
-    let resp = request(endpoint("translate", query), key, $text.toJArray)
-    let respJson = parseJson(resp.body)
+    let 
+        resp = request(endpoint("translate", query), key, $text.toJArray)
+        respJson = parseJson(resp.body)
     
     result = toSeq[Translation](respJson)
 
 
 proc transliterate*(key: string, text: TextQuery, language, fromScript, toScript: string): seq[Transliteration] =
     ## Converts text in one language from one script to another script.
-    let query = @{"language": language, "fromScript": fromScript, "toScript": toScript}
-    
-    let resp = request(endpoint("transliterate", query), key, $text.toJArray)
-    let respJson = parseJson(resp.body)
+    let 
+        query = @{"language": language, "fromScript": fromScript, "toScript": toScript}
+        resp = request(endpoint("transliterate", query), key, $text.toJArray)
+        respJson = parseJson(resp.body)
 
     result = toSeq[Transliteration](respJson)
 
 
 proc detect*(key: string, text: TextQuery): seq[Detection] =
     ## Identifies the language of a piece of text
-
-    let resp = request(endpoint("detect"), key, $text.toJArray)
-    let respJson = parseJson(resp.body)
+    let 
+        resp = request(endpoint("detect"), key, $text.toJArray)
+        respJson = parseJson(resp.body)
 
     result = toSeq[Detection](respJson)
 
@@ -228,33 +234,37 @@ proc break_sentence*(key: string, text: TextQuery, language, script: Option[stri
     if script.isSome:
         uri &= "&script=" & script.get
 
-    let resp = request(uri, key, $text.toJArray)
-    let respJson = parseJson(resp.body)
+    let 
+        resp = request(uri, key, $text.toJArray)
+        respJson = parseJson(resp.body)
 
     result = toSeq[BreakSentence](respJson)
     
 
 proc dictionary_lookup*(key: string, text: TextQuery, `from`, to: string): seq[DictionaryLookup] =
     ## Provides alternative translations for a word and a small number of idiomatic phrases. 
-    ## Each translation has a part-of-speech and a list of back-translations. The back-translations enable a user to understand the translation in context. 
+    ## Each translation has a part-of-speech and a list of back-translations. 
+    ## The back-translations enable a user to understand the translation in context. 
     ## The Dictionary Example operation allows further drill down to see example uses of each translation pair.
-    let uri = endpoint("dictionary/lookup", @{"from": `from`, "to": to})
-
-    let resp = request(uri, key, $text.toJArray)
-    let respJson = parseJson(resp.body)
+    let 
+        uri = endpoint("dictionary/lookup", @{"from": `from`, "to": to})
+        resp = request(uri, key, $text.toJArray)
+        respJson = parseJson(resp.body)
 
     result = toSeq[DictionaryLookup](respJson)
 
 
 proc dictionary_examples*(key: string, query: openArray[DictExQuery], `from`, to: string): seq[DictionaryExample] =
-    ## Provides examples that show how terms in the dictionary are used in context. This operation is used in tandem with Dictionary lookup.
+    ## Provides examples that show how terms in the dictionary are used in context. 
+    ## This operation is used in tandem with Dictionary lookup.
+    
     var body = JsonNode(kind: JArray, elems: @[])
     for t in query:
         body.add(JsonNode(kind: JObject, fields: {"Text": %t.text, "Translation": %t.translation}.toOrderedTable))
 
-    let uri = endpoint("dictionary/examples", @{"from": `from`, "to": to})
-
-    let resp = request(uri, key, $body)
-    let respJson = parseJson(resp.body)
+    let 
+        uri = endpoint("dictionary/examples", @{"from": `from`, "to": to})
+        resp = request(uri, key, $body)
+        respJson = parseJson(resp.body)
 
     result = toSeq[DictionaryExample](respJson)
