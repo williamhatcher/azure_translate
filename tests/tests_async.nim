@@ -9,6 +9,12 @@ import unittest, options, os, tables, strutils, re, httpclient, asyncdispatch
 
 import azure_translate
 
+when defined(useJunit):
+    import streams
+    let junit_output = newFileStream("test_results/async.xml", fmWrite)
+    addOutputFormatter newJUnitOutputFormatter junit_output
+    addOutputFormatter defaultConsoleFormatter()
+
 let 
     client = newAsyncHttpClient()
     key = getEnv("AZURE_SECRET_KEY")
@@ -169,3 +175,6 @@ test "async dictionary examples":
     check(example.normalizedSource == "fly")
     check(example.normalizedTarget == "volar")
     check(example.examples.len > 0)
+
+when defined(useJunit):
+    close junit_output

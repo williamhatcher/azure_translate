@@ -14,3 +14,6 @@ htmldocs/
 
 # Ignore Environment Files
 **/.env
+
+# Ignore tests results
+test_results/
