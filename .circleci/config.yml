@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: nimlang/nim
+    resource_class: small
     steps:
       - run: echo 'export PATH=~/.nimble/bin:$PATH' >> $BASH_ENV
       - checkout
@@ -13,9 +14,7 @@ jobs:
           key: nim-0000
           paths:
             - .nimble
+      - run: mkdir test_results
       - run: nimble test -y
-      - store_artifacts:
-          path: test-reports/
-          destination: tr1
       - store_test_results:
-          path: test-reports/
+          path: test_results/
