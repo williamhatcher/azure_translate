@@ -9,11 +9,6 @@ jobs:
       # Reuse cached directories
       - restore_cache:
           key: nim-0000
-      - run:
-          command: |
-            # Example: adding OS libraries
-            apt-get update
-            apt-get install -y --no-install-recommends libsodium23
       - save_cache:
           key: nim-0000
           paths:
