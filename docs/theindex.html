@@ -92,10 +92,6 @@ function main() {
 <li><a class="reference external"
           data-doc-search-tag="azure_translate: BaseDictionaryExample" href="azure_translate.html#BaseDictionaryExample">azure_translate: BaseDictionaryExample</a></li>
           </ul></dd>
-<dt><a name="BaseLanguage" href="#BaseLanguage"><span>BaseLanguage:</span></a></dt><dd><ul class="simple">
-<li><a class="reference external"
-          data-doc-search-tag="azure_translate: BaseLanguage" href="azure_translate.html#BaseLanguage">azure_translate: BaseLanguage</a></li>
-          </ul></dd>
 <dt><a name="BaseTranslation" href="#BaseTranslation"><span>BaseTranslation:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
           data-doc-search-tag="azure_translate: BaseTranslation" href="azure_translate.html#BaseTranslation">azure_translate: BaseTranslation</a></li>
@@ -106,15 +102,25 @@ function main() {
           </ul></dd>
 <dt><a name="break_sentence" href="#break_sentence"><span>break_sentence:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="azure_translate: break_sentence(key: string; text: TextQuery;
+          data-doc-search-tag="azure_translate: break_sentence(client: AsyncHttpClient; key: string; text: TextQuery;
+               language, script: Option[string] = none(string)): Future[
+    seq[BreakSentence]]" href="azure_translate.html#break_sentence%2CAsyncHttpClient%2Cstring%2CTextQuery%2COption%5Bstring%5D%2COption%5Bstring%5D">azure_translate: break_sentence(client: AsyncHttpClient; key: string; text: TextQuery;
+               language, script: Option[string] = none(string)): Future[
+    seq[BreakSentence]]</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="azure_translate: break_sentence(client: HttpClient; key: string; text: TextQuery;
                language, script: Option[string] = none(string)): seq[
-    BreakSentence]" href="azure_translate.html#break_sentence%2Cstring%2CTextQuery%2COption%5Bstring%5D%2COption%5Bstring%5D">azure_translate: break_sentence(key: string; text: TextQuery;
+    BreakSentence]" href="azure_translate.html#break_sentence%2CHttpClient%2Cstring%2CTextQuery%2COption%5Bstring%5D%2COption%5Bstring%5D">azure_translate: break_sentence(client: HttpClient; key: string; text: TextQuery;
                language, script: Option[string] = none(string)): seq[
     BreakSentence]</a></li>
           </ul></dd>
 <dt><a name="detect" href="#detect"><span>detect:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="azure_translate: detect(key: string; text: TextQuery): seq[Detection]" href="azure_translate.html#detect%2Cstring%2CTextQuery">azure_translate: detect(key: string; text: TextQuery): seq[Detection]</a></li>
+          data-doc-search-tag="azure_translate: detect(client: AsyncHttpClient; key: string; text: TextQuery): Future[
+    seq[Detection]]" href="azure_translate.html#detect%2CAsyncHttpClient%2Cstring%2CTextQuery">azure_translate: detect(client: AsyncHttpClient; key: string; text: TextQuery): Future[
+    seq[Detection]]</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="azure_translate: detect(client: HttpClient; key: string; text: TextQuery): seq[Detection]" href="azure_translate.html#detect%2CHttpClient%2Cstring%2CTextQuery">azure_translate: detect(client: HttpClient; key: string; text: TextQuery): seq[Detection]</a></li>
           </ul></dd>
 <dt><a name="DetectedLanguage" href="#DetectedLanguage"><span>DetectedLanguage:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -134,9 +140,15 @@ function main() {
           </ul></dd>
 <dt><a name="dictionary_examples" href="#dictionary_examples"><span>dictionary_examples:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="azure_translate: dictionary_examples(key: string; query: openArray[DictExQuery]; from, to: string): seq[
-    DictionaryExample]" href="azure_translate.html#dictionary_examples%2Cstring%2CopenArray%5BDictExQuery%5D%2Cstring%2Cstring">azure_translate: dictionary_examples(key: string; query: openArray[DictExQuery]; from, to: string): seq[
-    DictionaryExample]</a></li>
+          data-doc-search-tag="azure_translate: dictionary_examples(client: AsyncHttpClient; key: string;
+                    query: seq[DictExQuery]; from, to: string): Future[
+    seq[DictionaryExample]]" href="azure_translate.html#dictionary_examples%2CAsyncHttpClient%2Cstring%2Cseq%5BDictExQuery%5D%2Cstring%2Cstring">azure_translate: dictionary_examples(client: AsyncHttpClient; key: string;
+                    query: seq[DictExQuery]; from, to: string): Future[
+    seq[DictionaryExample]]</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="azure_translate: dictionary_examples(client: HttpClient; key: string; query: seq[DictExQuery];
+                    from, to: string): seq[DictionaryExample]" href="azure_translate.html#dictionary_examples%2CHttpClient%2Cstring%2Cseq%5BDictExQuery%5D%2Cstring%2Cstring">azure_translate: dictionary_examples(client: HttpClient; key: string; query: seq[DictExQuery];
+                    from, to: string): seq[DictionaryExample]</a></li>
           </ul></dd>
 <dt><a name="DictionaryLanguage" href="#DictionaryLanguage"><span>DictionaryLanguage:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -148,9 +160,13 @@ function main() {
           </ul></dd>
 <dt><a name="dictionary_lookup" href="#dictionary_lookup"><span>dictionary_lookup:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="azure_translate: dictionary_lookup(key: string; text: TextQuery; from, to: string): seq[
-    DictionaryLookup]" href="azure_translate.html#dictionary_lookup%2Cstring%2CTextQuery%2Cstring%2Cstring">azure_translate: dictionary_lookup(key: string; text: TextQuery; from, to: string): seq[
-    DictionaryLookup]</a></li>
+          data-doc-search-tag="azure_translate: dictionary_lookup(client: AsyncHttpClient; key: string; text: TextQuery;
+                  from, to: string): Future[seq[DictionaryLookup]]" href="azure_translate.html#dictionary_lookup%2CAsyncHttpClient%2Cstring%2CTextQuery%2Cstring%2Cstring">azure_translate: dictionary_lookup(client: AsyncHttpClient; key: string; text: TextQuery;
+                  from, to: string): Future[seq[DictionaryLookup]]</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="azure_translate: dictionary_lookup(client: HttpClient; key: string; text: TextQuery;
+                  from, to: string): seq[DictionaryLookup]" href="azure_translate.html#dictionary_lookup%2CHttpClient%2Cstring%2CTextQuery%2Cstring%2Cstring">azure_translate: dictionary_lookup(client: HttpClient; key: string; text: TextQuery;
+                  from, to: string): seq[DictionaryLookup]</a></li>
           </ul></dd>
 <dt><a name="DictionaryLookupTranslations" href="#DictionaryLookupTranslations"><span>DictionaryLookupTranslations:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
@@ -166,8 +182,12 @@ function main() {
           </ul></dd>
 <dt><a name="languages" href="#languages"><span>languages:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="azure_translate: languages(key: string; scope: openArray[Scope] = [];
-          acceptLanguage: Option[string] = none(string)): Languages" href="azure_translate.html#languages%2Cstring%2CopenArray%5BScope%5D%2COption%5Bstring%5D">azure_translate: languages(key: string; scope: openArray[Scope] = [];
+          data-doc-search-tag="azure_translate: languages(client: AsyncHttpClient; key: string; scope: seq[Scope] = @[];
+          acceptLanguage: Option[string] = none(string)): Future[Languages]" href="azure_translate.html#languages%2CAsyncHttpClient%2Cstring%2Cseq%5BScope%5D%2COption%5Bstring%5D">azure_translate: languages(client: AsyncHttpClient; key: string; scope: seq[Scope] = @[];
+          acceptLanguage: Option[string] = none(string)): Future[Languages]</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="azure_translate: languages(client: HttpClient; key: string; scope: seq[Scope] = @[];
+          acceptLanguage: Option[string] = none(string)): Languages" href="azure_translate.html#languages%2CHttpClient%2Cstring%2Cseq%5BScope%5D%2COption%5Bstring%5D">azure_translate: languages(client: HttpClient; key: string; scope: seq[Scope] = @[];
           acceptLanguage: Option[string] = none(string)): Languages</a></li>
           </ul></dd>
 <dt><a name="ProfanityAction" href="#ProfanityAction"><span>ProfanityAction:</span></a></dt><dd><ul class="simple">
@@ -200,7 +220,25 @@ function main() {
           </ul></dd>
 <dt><a name="translate" href="#translate"><span>translate:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="azure_translate: translate(key: string; text: TextQuery; to: openArray[string];
+          data-doc-search-tag="azure_translate: translate(client: AsyncHttpClient; key: string; text: TextQuery;
+          to: seq[string]; from: Option[string] = none(string);
+          textType: Option[TextType] = none(TextType);
+          category: Option[string] = none(string);
+          profanityAction: Option[ProfanityAction] = none(ProfanityAction);
+          profanityMarker: Option[ProfanityMarker] = none(ProfanityMarker);
+          includeAlignment, includeSentenceLength: Option[bool] = none(bool);
+          suggestedFrom, fromScript, toScript: Option[string] = none(string);
+          allowFallback: Option[bool] = none(bool)): Future[seq[Translation]]" href="azure_translate.html#translate%2CAsyncHttpClient%2Cstring%2CTextQuery%2Cseq%5Bstring%5D%2COption%5Bstring%5D%2COption%5BTextType%5D%2COption%5Bstring%5D%2COption%5BProfanityAction%5D%2COption%5BProfanityMarker%5D%2COption%5Bbool%5D%2COption%5Bbool%5D%2COption%5Bstring%5D%2COption%5Bstring%5D%2COption%5Bstring%5D%2COption%5Bbool%5D">azure_translate: translate(client: AsyncHttpClient; key: string; text: TextQuery;
+          to: seq[string]; from: Option[string] = none(string);
+          textType: Option[TextType] = none(TextType);
+          category: Option[string] = none(string);
+          profanityAction: Option[ProfanityAction] = none(ProfanityAction);
+          profanityMarker: Option[ProfanityMarker] = none(ProfanityMarker);
+          includeAlignment, includeSentenceLength: Option[bool] = none(bool);
+          suggestedFrom, fromScript, toScript: Option[string] = none(string);
+          allowFallback: Option[bool] = none(bool)): Future[seq[Translation]]</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="azure_translate: translate(client: HttpClient; key: string; text: TextQuery; to: seq[string];
           from: Option[string] = none(string);
           textType: Option[TextType] = none(TextType);
           category: Option[string] = none(string);
@@ -208,7 +246,7 @@ function main() {
           profanityMarker: Option[ProfanityMarker] = none(ProfanityMarker);
           includeAlignment, includeSentenceLength: Option[bool] = none(bool);
           suggestedFrom, fromScript, toScript: Option[string] = none(string);
-          allowFallback: Option[bool] = none(bool)): seq[Translation]" href="azure_translate.html#translate%2Cstring%2CTextQuery%2CopenArray%5Bstring%5D%2COption%5Bstring%5D%2COption%5BTextType%5D%2COption%5Bstring%5D%2COption%5BProfanityAction%5D%2COption%5BProfanityMarker%5D%2COption%5Bbool%5D%2COption%5Bbool%5D%2COption%5Bstring%5D%2COption%5Bstring%5D%2COption%5Bstring%5D%2COption%5Bbool%5D">azure_translate: translate(key: string; text: TextQuery; to: openArray[string];
+          allowFallback: Option[bool] = none(bool)): seq[Translation]" href="azure_translate.html#translate%2CHttpClient%2Cstring%2CTextQuery%2Cseq%5Bstring%5D%2COption%5Bstring%5D%2COption%5BTextType%5D%2COption%5Bstring%5D%2COption%5BProfanityAction%5D%2COption%5BProfanityMarker%5D%2COption%5Bbool%5D%2COption%5Bbool%5D%2COption%5Bstring%5D%2COption%5Bstring%5D%2COption%5Bstring%5D%2COption%5Bbool%5D">azure_translate: translate(client: HttpClient; key: string; text: TextQuery; to: seq[string];
           from: Option[string] = none(string);
           textType: Option[TextType] = none(TextType);
           category: Option[string] = none(string);
@@ -228,8 +266,14 @@ function main() {
           </ul></dd>
 <dt><a name="transliterate" href="#transliterate"><span>transliterate:</span></a></dt><dd><ul class="simple">
 <li><a class="reference external"
-          data-doc-search-tag="azure_translate: transliterate(key: string; text: TextQuery;
-              language, fromScript, toScript: string): seq[Transliteration]" href="azure_translate.html#transliterate%2Cstring%2CTextQuery%2Cstring%2Cstring%2Cstring">azure_translate: transliterate(key: string; text: TextQuery;
+          data-doc-search-tag="azure_translate: transliterate(client: AsyncHttpClient; key: string; text: TextQuery;
+              language, fromScript, toScript: string): Future[
+    seq[Transliteration]]" href="azure_translate.html#transliterate%2CAsyncHttpClient%2Cstring%2CTextQuery%2Cstring%2Cstring%2Cstring">azure_translate: transliterate(client: AsyncHttpClient; key: string; text: TextQuery;
+              language, fromScript, toScript: string): Future[
+    seq[Transliteration]]</a></li>
+          <li><a class="reference external"
+          data-doc-search-tag="azure_translate: transliterate(client: HttpClient; key: string; text: TextQuery;
+              language, fromScript, toScript: string): seq[Transliteration]" href="azure_translate.html#transliterate%2CHttpClient%2Cstring%2CTextQuery%2Cstring%2Cstring%2Cstring">azure_translate: transliterate(client: HttpClient; key: string; text: TextQuery;
               language, fromScript, toScript: string): seq[Transliteration]</a></li>
           </ul></dd>
 <dt><a name="Transliteration" href="#Transliteration"><span>Transliteration:</span></a></dt><dd><ul class="simple">
@@ -245,7 +289,7 @@ function main() {
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-01-01 21:16:46 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-03-06 19:59:02 UTC</small>
       </div>
     </div>
   </div>
